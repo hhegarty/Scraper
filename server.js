@@ -37,8 +37,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Headlines";
 
 mongoose.connect(MONGODB_URI);
 
-
-
 // A GET route for scraping the echoJS website //
 
 app.get("/scrape", function (req, res) {
@@ -117,7 +115,7 @@ app.get("/articles", function (req, res) {
 
 app.get("/articles/:id", function (req, res) {
 
-  
+
 
   db.Article.findOne({ _id: req.params.id })
     .populate("note")
@@ -131,9 +129,9 @@ app.get("/articles/:id", function (req, res) {
 
 // Route for saving/updating an Article's associated Note //
 
-app.post("/articles/:id", function (req, res) { 
+app.post("/articles/:id", function (req, res) {
 
-   // Save the new note that gets posted to the Notes collection //
+  // Save the new note that gets posted to the Notes collection //
   // Find article from the req.params.id //
   // Update it's "note" property with the _id of the new note //
 
@@ -162,14 +160,14 @@ app.post("/articles/:id", function (req, res) {
 
 app.delete("/articles/:id", function (req, res) {
 
-  
+
 
   db.Note.remove(req.body)
     .then(function (dbNote) {
 
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     })
-    .then(function (dbArticle) { 
+    .then(function (dbArticle) {
 
       // If user was updated successfully, send it back to the client //
 
